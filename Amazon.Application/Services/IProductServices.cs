@@ -1,0 +1,20 @@
+﻿using Amazon.DTO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Amazon.Application.Services
+{
+    public interface IProductServices
+    {
+        Task<List<ShowProductDTO>> ShowProductsPagination(int pagenumber,int items);
+        Task<List<ShowProductDTO>> GetProductsByCategoryId(int categoryId);
+        Task<ShowProductDTO> GetProductsById(int id);
+        Task<List<ShowProductDTO>> GetAllProducts();
+        Task<List<ShowProductDTO>> FilterByPrice(decimal initprice,decimal finalprice);
+        Task<List<ShowProductDTO>> SearchByProductName(string name);
+        Task<List<ShowProductDTO>> SearchByArProductName(string Arname);
+    }
+}
