@@ -78,5 +78,20 @@ namespace Amazon.Application.Services
             product.images = await _Imgrepo.GetImagesByPrdId(id);
             return product;
         }
+        public async Task<PriceDTO> GetPriceCategoryId(int id)
+        {
+            var products = await _reposatory.GetAllAsync();
+            var filtterdproducts = products.
+                Where(p => p.CategoryId == id).ToList();
+            decimal minprice = 0;
+            decimal maxprice = 100;
+            if (filtterdproducts.Count > 0)
+            {
+                minprice = filtterdproducts.Min(p => p.Price);
+                maxprice = filtterdproducts.Max(p => p.Price);
+            }
+
+            return new PriceDTO() { MaxPrice = maxprice, MinPrice = minprice };
+        }
     }
 }

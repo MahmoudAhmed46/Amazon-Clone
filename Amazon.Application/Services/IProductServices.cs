@@ -16,5 +16,6 @@ namespace Amazon.Application.Services
         Task<List<ShowProductDTO>> FilterByPrice(decimal initprice,decimal finalprice);
         Task<List<ShowProductDTO>> SearchByProductName(string name);
         Task<List<ShowProductDTO>> SearchByArProductName(string Arname);
+        Task<PriceDTO> GetPriceCategoryId(int id);
     }
 }
