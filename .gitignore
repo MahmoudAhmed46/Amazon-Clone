@@ -396,12 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
-/AmazonAPI/appsettings.json
-/.gitignore
-/Amazon.Context/Migrations/20230718152644_init.Designer.cs
-/Amazon.Context/Migrations/20230718153151_addnullable.cs
-/Amazon.Context/Migrations/20230718193432_init.cs
-/Amazon.Context/Migrations/20230718193432_init.Designer.cs
-/AmazonAPI/appsettings.json
 /.gitignore
