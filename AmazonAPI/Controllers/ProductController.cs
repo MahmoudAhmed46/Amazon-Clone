@@ -66,6 +66,7 @@ namespace AmazonAPI.Controllers
             ShowProductDTO products = await _prodservices.GetProductsById(id);
             return Ok(products);
         }
+
         [HttpGet]
         [Route("GetMinMaxPrice")]
         public async Task<IActionResult> GetPriceRange(int categoryid)
@@ -73,6 +74,5 @@ namespace AmazonAPI.Controllers
             PriceDTO prices = await _prodservices.GetPriceCategoryId(categoryid);
             return Ok(prices);
         }
-
     }
 }
