@@ -38,9 +38,9 @@ namespace AmazonAPI.Controllers
         }
         [HttpGet]
         [Route("FillterByPrice")]
-        public async Task<IActionResult> GetProductsPrice(decimal minprice,decimal maxprice)
+        public async Task<IActionResult> GetProductsPrice(int catid,decimal minprice,decimal maxprice)
         {
-            List<ShowProductDTO> products = await _prodservices.FilterByPrice(minprice,maxprice);
+            List<ShowProductDTO> products = await _prodservices.FilterByPrice(catid,minprice,maxprice);
             return Ok(products);
         }
         [HttpGet]
@@ -74,5 +74,14 @@ namespace AmazonAPI.Controllers
             PriceDTO prices = await _prodservices.GetPriceCategoryId(categoryid);
             return Ok(prices);
         }
+
+        [HttpGet]
+        [Route("FillterByPriceMax")]
+        public async Task<IActionResult> GetmaxPriceProducts(int catid,decimal maxprice)
+        {
+            List<ShowProductDTO> products = await _prodservices.GetProductsWithMaxPriceFillter(catid, maxprice);
+            return Ok(products);
+        }
+
     }
 }

@@ -13,9 +13,10 @@ namespace Amazon.Application.Services
         Task<List<ShowProductDTO>> GetProductsByCategoryId(int categoryId);
         Task<ShowProductDTO> GetProductsById(int id);
         Task<List<ShowProductDTO>> GetAllProducts();
-        Task<List<ShowProductDTO>> FilterByPrice(decimal initprice,decimal finalprice);
+        Task<List<ShowProductDTO>> FilterByPrice(int catid,decimal initprice,decimal finalprice);
         Task<List<ShowProductDTO>> SearchByProductName(string name);
         Task<List<ShowProductDTO>> SearchByArProductName(string Arname);
         Task<PriceDTO> GetPriceCategoryId(int id);
+        Task<List<ShowProductDTO>> GetProductsWithMaxPriceFillter(int catid, decimal max);
     }
 }

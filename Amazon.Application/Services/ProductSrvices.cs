@@ -23,10 +23,10 @@ namespace Amazon.Application.Services
             _Imgrepo= imageReposatory;
         }
 
-        public async Task<List<ShowProductDTO>> FilterByPrice(decimal initprice, decimal finalprice)
+        public async Task<List<ShowProductDTO>> FilterByPrice(int catid,decimal initprice, decimal finalprice)
         {
             var res = await _reposatory.GetAllAsync();
-            var FillterdList = res.Where(p => p.Price >= initprice && p.Price <= finalprice);
+            var FillterdList = res.Where(p => p.Price >= initprice && p.Price <= finalprice && p.CategoryId==catid);
             return _mapper.Map<List<ShowProductDTO>>(FillterdList);
         }
 
@@ -93,6 +93,13 @@ namespace Amazon.Application.Services
             }
 
             return new PriceDTO() { MaxPrice = maxprice, MinPrice = minprice };
+        }
+
+        public async Task<List<ShowProductDTO>> GetProductsWithMaxPriceFillter(int catid, decimal max)
+        {
+            var res = await _reposatory.GetAllAsync();
+            var FillterdList = res.Where(p => p.Price >=max&& p.CategoryId == catid);
+            return _mapper.Map<List<ShowProductDTO>>(FillterdList);
         }
     }
 }
