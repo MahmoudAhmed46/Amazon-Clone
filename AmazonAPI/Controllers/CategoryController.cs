@@ -30,16 +30,50 @@ namespace AmazonAPI.Controllers
         [Route("SubCategories")]
         public async Task<IActionResult> getSubCategory(int id)
         {
-            var res = await _subcategoryServices.getSubCategoryByCatId(id);
-            return Ok(res);
+            if (Request.Headers.TryGetValue("accept-language", out var lang))
+            {
+                lang = lang.ToString();
+            }
+            if (lang == "en")
+            {
+                var res = await _subcategoryServices.getSubCategoryByCatId(id);
+                return Ok(res);
+            }else if(lang == "ar")
+            {
+                var res = await _subcategoryServices.getSubCategoryByCatIdInAR(id);
+                return Ok(res);
+            }
+            else
+            {
+                var res = await _subcategoryServices.getSubCategoryByCatId(id);
+                return Ok(res);
+            }
+
         }
 
         [HttpGet]
         [Route("AllSubCategories")]
         public async Task<IActionResult> getSubCategory()
         {
-            var res = await _subcategoryServices.GetAllSubcategories();
-            return Ok(res);
+            if (Request.Headers.TryGetValue("accept-language", out var lang))
+            {
+                lang = lang.ToString();
+            }
+            if (lang == "en")
+            {
+                var res = await _subcategoryServices.GetAllSubcategories();
+                return Ok(res);
+            }
+            else if (lang == "ar")
+            {
+                var res = await _subcategoryServices.GetAllSubcategoriesInAR();
+                return Ok(res);
+            }
+            else
+            {
+                var res = await _subcategoryServices.GetAllSubcategories();
+                return Ok(res);
+            }
         }
 
     }

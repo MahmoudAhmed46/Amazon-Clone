@@ -11,5 +11,8 @@ namespace Amazon.Application.Services
 	{
 		Task<List<SubCategoryDTO>> getSubCategoryByCatId(int id);
 		Task<List<SubCategoryDTO>> GetAllSubcategories();
-	}
+
+        Task<List<arsubcategory>> getSubCategoryByCatIdInAR(int id);
+        Task<List<arsubcategory>> GetAllSubcategoriesInAR();
+    }
 }

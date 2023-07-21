@@ -69,8 +69,9 @@ namespace AmazonAPI.Controllers
 
         [HttpGet]
         [Route("GetMinMaxPrice")]
-        public async Task<IActionResult> GetPriceRange(int categoryid)
+        public async Task<IActionResult> GetPriceRange(string lang,int categoryid)
         {
+            
             PriceDTO prices = await _prodservices.GetPriceCategoryId(categoryid);
             return Ok(prices);
         }
@@ -79,6 +80,11 @@ namespace AmazonAPI.Controllers
         [Route("FillterByPriceMax")]
         public async Task<IActionResult> GetmaxPriceProducts(int catid,decimal maxprice)
         {
+            //string lang;
+            if(Request.Headers.TryGetValue("accept-language",out var lang))
+            {
+                lang = lang.ToString();
+            }
             List<ShowProductDTO> products = await _prodservices.GetProductsWithMaxPriceFillter(catid, maxprice);
             return Ok(products);
         }
