@@ -18,6 +18,7 @@ namespace Amazon.Application.Mapper
             CreateMap<Category,arCategoryDTO>().ReverseMap();
             CreateMap<Category, arsubcategory>().ReverseMap();
             CreateMap<Product, ShowProductDTO>().ReverseMap();
+            CreateMap<Product, ArShowproduct>().ReverseMap();
             CreateMap<ApplicationUser,UserRegisterDTO>().ReverseMap();
             CreateMap<ApplicationUser,UserLoginDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemShow>().ReverseMap();
