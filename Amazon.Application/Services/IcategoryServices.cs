@@ -11,5 +11,7 @@ namespace Amazon.Application.Services
 	{
 		Task<List<CategoryDTO>> GetAllCategory();
 		Task<CategoryDTO> GetByIdAsync(int ID);
-	}
+        Task<List<arCategoryDTO>> GetAllCategoryInAR();
+        Task<arCategoryDTO> GetByIdAsyncInAR(int ID);
+    }
 }

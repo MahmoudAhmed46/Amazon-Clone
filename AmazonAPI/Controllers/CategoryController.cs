@@ -22,8 +22,26 @@ namespace AmazonAPI.Controllers
         [Route("Categories")]
         public async Task<IActionResult> getAll()
         {
-            var res = await _icategoryServices.GetAllCategory();
-            return Ok(res);
+            if (Request.Headers.TryGetValue("accept-language", out var lang))
+            {
+                lang = lang.ToString();
+            }
+            if (lang == "en")
+            {
+                var res = await _icategoryServices.GetAllCategory();
+                return Ok(res);
+            }
+            else if(lang == "ar")
+            {
+                var res = await _icategoryServices.GetAllCategoryInAR();
+                return Ok(res);
+            }
+            else
+            {
+                var res = await _icategoryServices.GetAllCategory();
+                return Ok(res);
+            }
+
         }
 
         [HttpGet]
