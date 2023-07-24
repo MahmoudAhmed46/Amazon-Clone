@@ -55,6 +55,7 @@ namespace Amazon.Application.Services
             var FillterdList=res.Where(p=>p.Name.ToLower().Contains(name.ToLower()));
             return _mapper.Map<List<ShowProductDTO>>(FillterdList);
         }
+        #region User Services
 
         public async Task<List<ShowProductDTO>> ShowProductsPagination(int pagenumber, int items)
         {
@@ -74,7 +75,7 @@ namespace Amazon.Application.Services
         public async Task<ShowProductDTO> GetProductsById(int id)
         {
             var res = await _reposatory.GetByIdAsync(id);
-            var product= _mapper.Map<ShowProductDTO>(res);
+            var product = _mapper.Map<ShowProductDTO>(res);
             product.images = await _Imgrepo.GetImagesByPrdId(id);
             return product;
         }
@@ -84,9 +85,9 @@ namespace Amazon.Application.Services
             var products = await _reposatory.GetAllAsync();
             var filtterdproducts = products.
                 Where(p => p.CategoryId == id).ToList();
-            decimal minprice=0;
+            decimal minprice = 0;
             decimal maxprice = 100;
-            if (filtterdproducts.Count>0)
+            if (filtterdproducts.Count > 0)
             {
                 minprice = filtterdproducts.Min(p => p.Price);
                 maxprice = filtterdproducts.Max(p => p.Price);
@@ -98,8 +99,51 @@ namespace Amazon.Application.Services
         public async Task<List<ShowProductDTO>> GetProductsWithMaxPriceFillter(int catid, decimal max)
         {
             var res = await _reposatory.GetAllAsync();
-            var FillterdList = res.Where(p => p.Price >=max&& p.CategoryId == catid);
+            var FillterdList = res.Where(p => p.Price >= max && p.CategoryId == catid);
             return _mapper.Map<List<ShowProductDTO>>(FillterdList);
-        }
-    }
+        } 
+        #endregion
+
+
+        public async Task<bool> CreateProduct(ShowProductDTO product)
+		{
+			var res=await _reposatory.CreateAsync(_mapper.Map<Product>(product));
+            if (res !=null)
+            {
+                await _reposatory.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+		}
+
+		public async Task<bool> UpdateProduct(int id, ShowProductDTO product)
+		{
+            Product product1 = _mapper.Map<Product>(product);
+            product1.Id = id;
+            var res = await _reposatory.UpdateAsync(product1);
+            if (res)
+            {
+                await _reposatory.SaveChangesAsync();
+                return true;
+            }
+            else { return false; }
+		}
+
+		public async Task<bool> DeleteProduct(int id)
+		{
+            var res = await _reposatory.DeleteAsync(id);
+            if (res)
+            {
+                _reposatory.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+		}
+	}
 }

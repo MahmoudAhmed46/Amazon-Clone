@@ -18,5 +18,8 @@ namespace Amazon.Application.Services
         Task<List<ShowProductDTO>> SearchByArProductName(string Arname);
         Task<PriceDTO> GetPriceCategoryId(int id);
         Task<List<ShowProductDTO>> GetProductsWithMaxPriceFillter(int catid, decimal max);
+        Task<bool> CreateProduct(ShowProductDTO product);
+        Task<bool> UpdateProduct(int id, ShowProductDTO product);
+        Task<bool> DeleteProduct(int id);
     }
 }
