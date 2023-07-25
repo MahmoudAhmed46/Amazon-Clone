@@ -21,9 +21,9 @@ namespace Amazon.Application.Services
             _repository = repository;
         }
 
-        public async Task<List<OrderItemShow>> orderItems()
+        public async Task<List<OrderItemShow>> getOrderItemsByOrderId(int id)
         {
-            var res =await _repository.GetAllAsync();
+            var res =await _repository.getOrderItemsByOrderId(id);
             
             return _Mapper.Map<List<OrderItemShow>>(res);
         }

@@ -19,9 +19,13 @@ namespace Amazon.Application.Mapper
             CreateMap<Category, arsubcategory>().ReverseMap();
             CreateMap<Product, ShowProductDTO>().ReverseMap();
             CreateMap<Product, ArShowproduct>().ReverseMap();
+            CreateMap<Product,AddUpdateProductDTO>().ReverseMap();
             CreateMap<ApplicationUser,UserRegisterDTO>().ReverseMap();
             CreateMap<ApplicationUser,UserLoginDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemShow>().ReverseMap();
+            CreateMap<Image,ImageDTO>().ReverseMap();
+            CreateMap<Order, OrderDTO>().ReverseMap();
+            CreateMap<Rating, RatingDTO>().ReverseMap();
         }
     }
 }

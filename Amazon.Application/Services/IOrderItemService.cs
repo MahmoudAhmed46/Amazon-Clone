@@ -12,6 +12,6 @@ namespace Amazon.Application.Services
         Task<bool> Create(OrderItemShow cartitem);
         Task<bool> Update(int id, OrderItemShow cartitem);
         Task<bool> Delete(int id);
-        Task<List<OrderItemShow>> orderItems();
+        Task<List<OrderItemShow>> getOrderItemsByOrderId(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,12 @@ namespace Amazon.Domain
     public class Rating
     {
         public int id { get; set; }
-        public Star Star { get; set; }
-        public string Review { get; set; }
-        public virtual ICollection<ProductRating> ProductRatings { get; set; } =
-         new HashSet<ProductRating>();
+        public Star rate { get; set; }
+        public string review { get; set; }
+        public string userName { get; set; }
+
+        [ForeignKey("Product")]
+        public int productId { get; set; }
+        public Product Product { get; set; }
     }
 }

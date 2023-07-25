@@ -26,8 +26,8 @@ namespace Amazon.Infrastrucure
 
         public async Task<List<string>> GetImagesByPrdId(int id)
         {
-            var res = Context.Images.Where(p => p.ProductID == id).Select(i=>i.Name).ToList();
-            return res;
+            //var res = Context.Images.Where(p => p.ProductID == id).Select(i=>System.IO.File.ReadAllBytes(i.Name)).ToList();
+            return Context.Images.Where(p=>p.ProductID==id).Select(i=>i.Name).ToList();
         }
     }
 }

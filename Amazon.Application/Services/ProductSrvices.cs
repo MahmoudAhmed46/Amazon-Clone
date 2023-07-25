@@ -105,21 +105,21 @@ namespace Amazon.Application.Services
         #endregion
 
 
-        public async Task<bool> CreateProduct(ShowProductDTO product)
+        public async Task<ShowProductDTO> CreateProduct(AddUpdateProductDTO product)
 		{
 			var res=await _reposatory.CreateAsync(_mapper.Map<Product>(product));
             if (res !=null)
             {
                 await _reposatory.SaveChangesAsync();
-                return true;
+                return _mapper.Map<ShowProductDTO>(res);
             }
             else
             {
-                return false;
+                return null;
             }
 		}
 
-		public async Task<bool> UpdateProduct(int id, ShowProductDTO product)
+		public async Task<bool> UpdateProduct(int id, AddUpdateProductDTO product)
 		{
             Product product1 = _mapper.Map<Product>(product);
             product1.Id = id;

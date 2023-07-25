@@ -32,7 +32,5 @@ namespace Amazon.Domain
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; } =
             new HashSet<OrderItem>();
-        public virtual ICollection<ProductRating> ProductRatings { get; set; } =
-        new HashSet<ProductRating>();
     }
 }

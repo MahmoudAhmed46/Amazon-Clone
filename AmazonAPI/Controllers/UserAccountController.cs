@@ -53,12 +53,15 @@ namespace Amazon.Controllers
             {
                 user = await userReposatory.LoginByPhoneNumber(userLogin.Phone);
             }
-
+            
             if (user != null)
-            {
+            {              
                 var result = await signInManager.PasswordSignInAsync(user, userLogin.Password, true, false);
                 if (result.Succeeded)
-                    return RedirectToAction("generateToken");
+                {
+                    var id = await userManager.GetUserIdAsync(user);
+                    return RedirectToAction("GenerateToken", new {id=id});
+                }
             }
             return NotFound();
         }
@@ -92,26 +95,38 @@ namespace Amazon.Controllers
 
         [Route("Token/")]
         [HttpGet]
-        public async Task<IActionResult> generateToken()
+        public async Task<IActionResult> GenerateToken(string id)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.
-                GetBytes(configuration.GetSection("SecretKey").Value);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var key = Encoding.ASCII.GetBytes(configuration.GetSection("SecretKey").Value);
+
+            if (id != null)
             {
-                Subject = new ClaimsIdentity(new[]
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    new Claim(ClaimTypes.Name, "hosam"),
-                    new Claim(ClaimTypes.Role, "User")
-                }),
-                Expires = DateTime.UtcNow.AddMonths(1),
-                SigningCredentials = new SigningCredentials
-                (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha384Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-            return Ok(tokenString);
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                new Claim(ClaimTypes.Name, "hosam"),
+                new Claim(ClaimTypes.Role, "User"),
+                new Claim(ClaimTypes.NameIdentifier, id)
+            }),
+                    Expires = DateTime.UtcNow.AddMonths(1),
+                    SigningCredentials = new SigningCredentials
+                    (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha384Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+
+                var response = new
+                {
+                    userId = id,
+                    token = tokenString
+                };
+                return Ok(response);
+            }
+            else
+                return BadRequest();
         }
-      
+
     }
 }
