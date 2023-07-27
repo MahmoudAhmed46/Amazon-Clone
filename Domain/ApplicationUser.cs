@@ -17,9 +17,6 @@ namespace Amazon.Domain
         public int? CityId { get; set; }
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Address Length Must Be Between 5 to 100 char")]
         public virtual City? City { get; set; }
-        [ForeignKey("shippingAddress")]
-        public int? shippingAddressId { get; set; }
-        public virtual shippingAddress? shippingAddress { get; set; }
         public virtual ICollection<Order> Orders { get; set; } =
             new HashSet<Order>();
     }

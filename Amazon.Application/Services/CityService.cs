@@ -21,10 +21,12 @@ namespace Amazon.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<List<CitiesListDTO>> GetCities()
+     
+
+        public async Task<List<CitiesListDTO>> GetCitiesByCountryId(int id)
         {
-           List<City> cities=  await _cityRepo.GetAll();
-           return _mapper.Map<List<CitiesListDTO>>(cities);
+            List<City> cities = await _cityRepo.GetAllByCountryId(id);
+            return _mapper.Map<List<CitiesListDTO>>(cities);
         }
     }
 }

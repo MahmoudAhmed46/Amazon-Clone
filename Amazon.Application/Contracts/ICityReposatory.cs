@@ -9,6 +9,6 @@ namespace Amazon.Application.Contracts
 {
     public interface ICityReposatory:IReposatory<City,int>
     {
-		Task<List<City>> GetAll();
+		Task<List<City>> GetAllByCountryId(int id);
 	}
 }

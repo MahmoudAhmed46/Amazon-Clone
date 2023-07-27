@@ -10,5 +10,6 @@ namespace Amazon.Application.Contracts
     public interface IShippingAddressRepository
          : IReposatory<shippingAddress, int>
     {
-    }
+		Task<shippingAddress> GetAddressForUserById(string userid);
+	}
 }

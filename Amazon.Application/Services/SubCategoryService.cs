@@ -2,6 +2,7 @@
 using Amazon.Domain;
 using Amazon.DTO;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace Amazon.Application.Services
 		ICategoryReposatory _Repo;
 		IImageReposatory _imageReposatory;
 		private readonly IMapper mapper;
-		public SubCategoryService(ICategoryReposatory repo, IMapper mapper,IImageReposatory imageReposatory)
+        private readonly IConfiguration _configure;
+		public SubCategoryService(ICategoryReposatory repo, IConfiguration configuration,IMapper mapper,IImageReposatory imageReposatory)
 		{
 			_Repo = repo;
 			this.mapper = mapper;
 			this._imageReposatory = imageReposatory;
+            _configure= configuration;
 		}
 
         public async Task<List<SubCategoryDTO>> getSubCategoryByCatId(int id)

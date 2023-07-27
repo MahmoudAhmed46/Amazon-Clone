@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Amazon.Application.Services
 {
-    public interface ICityService
+    public interface ICountryServices
     {
-		Task<List<CitiesListDTO>> GetCitiesByCountryId(int id);
-	}
+        Task<List<CountryDTO>> GetAll();
+    }
 }
