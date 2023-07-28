@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Amazon.Context.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230727152821_lastmigration")]
-    partial class lastmigration
+    [Migration("20230727205956_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

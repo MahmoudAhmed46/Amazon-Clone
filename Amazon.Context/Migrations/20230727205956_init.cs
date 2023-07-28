@@ -59,34 +59,6 @@ namespace Amazon.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ratings",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Star = table.Column<int>(type: "int", nullable: false),
-                    Review = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ratings", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShippingAddresses",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    buildNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShippingAddresses", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -117,7 +89,7 @@ namespace Amazon.Context.Migrations
                     arabicName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UnitInStock = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     arabicDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -179,29 +151,24 @@ namespace Amazon.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductRatings",
+                name: "Ratings",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    rateId = table.Column<int>(type: "int", nullable: false),
-                    Ratingid = table.Column<int>(type: "int", nullable: false),
+                    rate = table.Column<int>(type: "int", nullable: false),
+                    review = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    userName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     productId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductRatings", x => x.id);
+                    table.PrimaryKey("PK_Ratings", x => x.id);
                     table.ForeignKey(
-                        name: "FK_ProductRatings_Products_productId",
+                        name: "FK_Ratings_Products_productId",
                         column: x => x.productId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_ProductRatings_Ratings_Ratingid",
-                        column: x => x.Ratingid,
-                        principalTable: "Ratings",
-                        principalColumn: "id",
                         onDelete: ReferentialAction.NoAction);
                 });
 
@@ -212,8 +179,7 @@ namespace Amazon.Context.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     EmailAddress = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    shippingAddressId = table.Column<int>(type: "int", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -236,14 +202,7 @@ namespace Amazon.Context.Migrations
                         name: "FK_AspNetUsers_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_ShippingAddresses_shippingAddressId",
-                        column: x => x.shippingAddressId,
-                        principalTable: "ShippingAddresses",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -332,6 +291,35 @@ namespace Amazon.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShippingAddresses",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    buildname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    userid = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShippingAddresses", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ShippingAddresses_AspNetUsers_userid",
+                        column: x => x.userid,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ShippingAddresses_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -340,8 +328,8 @@ namespace Amazon.Context.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false),
-                    shippingAddressId = table.Column<int>(type: "int", nullable: false)
+                    status = table.Column<int>(type: "int", nullable: true),
+                    shippingAddressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -356,8 +344,7 @@ namespace Amazon.Context.Migrations
                         name: "FK_Orders_ShippingAddresses_shippingAddressId",
                         column: x => x.shippingAddressId,
                         principalTable: "ShippingAddresses",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -437,11 +424,6 @@ namespace Amazon.Context.Migrations
                 filter: "Phone IS NOT NULL AND EmailAddress IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_shippingAddressId",
-                table: "AspNetUsers",
-                column: "shippingAddressId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -491,19 +473,24 @@ namespace Amazon.Context.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductRatings_productId",
-                table: "ProductRatings",
-                column: "productId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductRatings_Ratingid",
-                table: "ProductRatings",
-                column: "Ratingid");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ratings_productId",
+                table: "Ratings",
+                column: "productId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShippingAddresses_CityId",
+                table: "ShippingAddresses",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShippingAddresses_userid",
+                table: "ShippingAddresses",
+                column: "userid");
         }
 
         /// <inheritdoc />
@@ -531,7 +518,7 @@ namespace Amazon.Context.Migrations
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
-                name: "ProductRatings");
+                name: "Ratings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -543,19 +530,16 @@ namespace Amazon.Context.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Ratings");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "ShippingAddresses");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Cities");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "ShippingAddresses");
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "Countries");

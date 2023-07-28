@@ -10,5 +10,6 @@ namespace Amazon.Application.Contracts
     public interface IRatingRepository : IReposatory<Rating, int>
     {
         Task<List<Rating>> GetAllByProductIdAsync(int productId);
+        Task<Dictionary<int, int>> calculateProductRate(int productId);
     }
 }

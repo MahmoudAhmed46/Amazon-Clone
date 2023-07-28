@@ -32,5 +32,9 @@ namespace Amazon.Application.Services
             var rating=await ratingRepository.GetAllByProductIdAsync(productId);
             return mapper.Map<List<RatingDTO>>(rating);
         }
+        public async Task<Dictionary<int, int>> calculateProductRate(int productId)
+        {
+            return await ratingRepository.calculateProductRate(productId);
+        }
     }
 }
