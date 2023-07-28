@@ -26,6 +26,9 @@ namespace Amazon.Application.Mapper
             CreateMap<Image,ImageDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<Rating, RatingDTO>().ReverseMap();
+            CreateMap<Country, CountryDTO>().ReverseMap();
+            CreateMap<City, CitiesListDTO>().ReverseMap();
+            CreateMap<shippingAddress, AddAndEditShippingAddressDTO>().ReverseMap();
         }
     }
 }

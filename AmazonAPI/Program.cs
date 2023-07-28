@@ -75,7 +75,12 @@ namespace AmazonAPI
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IRatingRepository, RatingRepository>();
             builder.Services.AddScoped<IRatingService, RatingService>();
-
+            builder.Services.AddScoped<IcountryReposatory, CountryReposatory>();
+            builder.Services.AddScoped<ICountryServices, CountryServices>();
+            builder.Services.AddScoped<ICityReposatory, CityReposatory>();
+            builder.Services.AddScoped<ICityService, CityService>();
+            builder.Services.AddScoped<IShippingAddressRepository, ShippingAddressReposatory>();
+            builder.Services.AddScoped<IShippingAddressServices, ShippingAddressServices>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var app = builder.Build();
 
