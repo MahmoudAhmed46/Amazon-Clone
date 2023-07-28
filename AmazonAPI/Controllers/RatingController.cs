@@ -23,11 +23,18 @@ namespace AmazonAPI.Controllers
             return rate != null ? Ok(rate) : BadRequest();
         }
         [HttpGet]
-        [Route("getAllRating")]
-        public async Task<IActionResult> getAllRatingByProductId(int productId)
+        [Route("getAllReviews")]
+        public async Task<IActionResult> getAllReviewsByProductId(int productId)
         {
             var rate = await ratingService.GetAllByProductIdAsync(productId);
             return rate != null ? Ok(rate) : BadRequest();
+        }
+        [HttpGet]
+        [Route("calculateProductRate")]
+        public async Task<IActionResult> calculateProductRate(int productId)
+        {
+            var rate = await ratingService.calculateProductRate(productId);
+            return Ok(rate);
         }
     }
 }

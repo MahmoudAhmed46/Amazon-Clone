@@ -13,5 +13,6 @@ namespace Amazon.Application.Services
     {
         Task<List<RatingDTO>> GetAllByProductIdAsync(int productId);
         Task<RatingDTO> createRating(RatingDTO rating);
+        Task<Dictionary<int, int>> calculateProductRate(int productId);
     }
 }
