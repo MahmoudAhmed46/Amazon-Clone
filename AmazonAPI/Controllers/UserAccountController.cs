@@ -82,7 +82,7 @@ namespace Amazon.Controllers
                 await signInManager.SignInWithClaimsAsync(user, false, claims);
                 return Ok(user);
             }
-            return BadRequest();
+            return BadRequest(result.Errors.ToList());
         }
 
         [Route("LogOut/")]
