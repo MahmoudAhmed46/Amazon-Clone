@@ -27,7 +27,12 @@ namespace Amazon.Application.Services
         {
             var res = await _reposatory.GetAllAsync();
             var FillterdList = res.Where(p => p.Price >= initprice && p.Price <= finalprice && p.CategoryId==catid);
-            return _mapper.Map<List<ShowProductDTO>>(FillterdList);
+            List<ShowProductDTO> Products = _mapper.Map<List<ShowProductDTO>>(FillterdList);
+            foreach(var Product in Products)
+            {
+                Product.images = await _Imgrepo.GetImagesByPrdId(Product.Id);
+            }
+            return Products;
         }
 
         public async Task<List<ShowProductDTO>> GetAllProducts()
@@ -100,7 +105,12 @@ namespace Amazon.Application.Services
         {
             var res = await _reposatory.GetAllAsync();
             var FillterdList = res.Where(p => p.Price >= max && p.CategoryId == catid);
-            return _mapper.Map<List<ShowProductDTO>>(FillterdList);
+            List<ShowProductDTO> Products = _mapper.Map<List<ShowProductDTO>>(FillterdList);
+            foreach (var Product in Products)
+            {
+                Product.images = await _Imgrepo.GetImagesByPrdId(Product.Id);
+            }
+            return Products;
         } 
         #endregion
 
