@@ -13,6 +13,7 @@ namespace Amazon.DTO
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime ArrivalDate { get; set; }
+        public decimal total { get; set; }
         public string UserId { get; set; }
         public Status? status { get; set; }
         public List<OrderItemShow>? OrderItems { get; set; }

@@ -58,7 +58,7 @@ namespace AmazonAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteOrder")]
+        [Route("DeleteOrder/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var order = await orderService.Delete(id);
