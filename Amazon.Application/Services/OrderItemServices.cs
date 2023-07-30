@@ -14,10 +14,13 @@ namespace Amazon.Application.Services
     {
         private readonly IOrderItemReposatory _repository;
         private readonly IMapper _Mapper;
+        private readonly IProductServices productServices;
 
-        public OrderItemServices(IOrderItemReposatory repository,IMapper mapper)
+        public OrderItemServices(IOrderItemReposatory repository,IMapper mapper,
+            IProductServices productServices)
         {
             _Mapper = mapper;
+            this.productServices = productServices;
             _repository = repository;
         }
 
@@ -33,15 +36,18 @@ namespace Amazon.Application.Services
             OrderItem orderItemModel = _Mapper.Map<OrderItem>(orderItemDto);
             var res = await _repository.CreateAsync(orderItemModel);
             await _repository.SaveChangesAsync();
+            await productServices.decreamnteUnitInStock(res.ProductId,res.Count);
             return  _Mapper.Map<OrderItemShow>(res);
         }
 
         public async Task<bool> Delete(int id)
         {
+            var orderItem=await _repository.GetByIdAsync(id);
             var res = await _repository.DeleteAsync(id);
             if (res)
             {
                 await _repository.SaveChangesAsync();
+                await productServices.IncreamnteUnitInStock(orderItem.ProductId, orderItem.Count);
                 return true;
             }else { return false; }
         }

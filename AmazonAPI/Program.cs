@@ -96,13 +96,13 @@ namespace AmazonAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseExceptionHandler(c => c.Run(async context =>
+           /* app.UseExceptionHandler(c => c.Run(async context =>
             {
                 var exception = context.Features;
                    
                 var response = new { error =$"This value is already taken" };
                 await context.Response.WriteAsJsonAsync(response);
-            }));
+            }));*/
 
             app.MapControllers();
 

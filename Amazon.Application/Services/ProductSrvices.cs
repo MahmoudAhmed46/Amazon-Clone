@@ -155,5 +155,21 @@ namespace Amazon.Application.Services
                 return false;
             }
 		}
-	}
+        public async Task<bool> IncreamnteUnitInStock(int id, int count)
+        {
+            var product=await _reposatory.GetByIdAsync(id);
+            product.UnitInStock += count;
+            var res=await _reposatory.UpdateAsync(product);
+            await _reposatory.SaveChangesAsync();
+            return res;
+        }
+        public async Task<bool> decreamnteUnitInStock(int id,int count)
+        {
+            var product = await _reposatory.GetByIdAsync(id);
+            product.UnitInStock -= count;
+            var res = await _reposatory.UpdateAsync(product);
+            await _reposatory.SaveChangesAsync();
+            return res;
+        }
+    }
 }
