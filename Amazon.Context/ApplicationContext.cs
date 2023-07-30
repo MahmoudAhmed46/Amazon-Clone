@@ -25,16 +25,15 @@ namespace Amazon.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUser>()
-            .HasIndex(p => new { p.Phone, p.EmailAddress })
+            .HasIndex(p => p.EmailAddress )
             .IsUnique()
-            .HasFilter("Phone IS NOT NULL AND EmailAddress IS NOT NULL");
+            .HasFilter("EmailAddress IS NOT NULL");
 
-            modelBuilder.Entity<Product>(p =>
-            {
-                p.Property(s => s.Status).HasDefaultValue(true);
-            });
+            modelBuilder.Entity<ApplicationUser>()
+           .HasIndex(p => p.Phone)
+           .IsUnique()
+           .HasFilter("Phone IS NOT NULL");
             base.OnModelCreating(modelBuilder);
-
         }
     }
 }

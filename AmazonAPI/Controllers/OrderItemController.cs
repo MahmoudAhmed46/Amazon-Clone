@@ -28,7 +28,7 @@ namespace AmazonAPI.Controllers
         [Route("CreateItem")]
         public async Task<IActionResult> Create(OrderItemShow orderItemShow)
         {
-            var res = await orderService.Create(orderItemShow);
+            var res = await orderService.CreateAsync(orderItemShow);
             return Ok(res);
         }
         [HttpPut]

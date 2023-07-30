@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -70,20 +72,36 @@ namespace Amazon.Controllers
         public async Task<IActionResult> Register(UserRegisterDTO userDto)
         {
             var user = mapper.Map<ApplicationUser>(userDto);
-            IdentityResult result = await userManager.CreateAsync(user, userDto.Password);
-            if (result.Succeeded)
+            try
             {
-                var id = await userManager.GetUserIdAsync(user);
-                var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name, user.UserName),
-                            new Claim(ClaimTypes.NameIdentifier,id)
-                        };
-                await signInManager.SignInWithClaimsAsync(user, false, claims);
-                return Ok(user);
+                var result = await userManager.CreateAsync(user, userDto.Password);
+                if (result.Succeeded)
+                {
+                    var id = await userManager.GetUserIdAsync(user);
+                    var claims = new List<Claim>
+                       {
+                           new Claim(ClaimTypes.Name, user.UserName),
+                           new Claim(ClaimTypes.NameIdentifier,id)
+                       };
+                    await signInManager.SignInWithClaimsAsync(user, false, claims);
+                    return Ok(user);
+                }
+                else
+                {
+                    string errors = "";
+                    foreach (var error in result.Errors)
+                    {
+                        errors += error.Description.ToString();
+                    }
+                    return BadRequest(errors);
+                }
             }
-            return BadRequest(result.Errors.ToList());
-        }
+            catch (SqlException ex)
+            {
+                return BadRequest(ex.Message);
+            } 
+          
+        } 
 
         [Route("LogOut/")]
         [HttpGet]

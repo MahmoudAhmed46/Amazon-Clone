@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Amazon.Context.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230727205956_init")]
+    [Migration("20230729012714_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -90,6 +90,10 @@ namespace Amazon.Context.Migrations
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("EmailAddress")
+                        .IsUnique()
+                        .HasFilter("EmailAddress IS NOT NULL");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -98,9 +102,9 @@ namespace Amazon.Context.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("Phone", "EmailAddress")
+                    b.HasIndex("Phone")
                         .IsUnique()
-                        .HasFilter("Phone IS NOT NULL AND EmailAddress IS NOT NULL");
+                        .HasFilter("Phone IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -303,9 +307,7 @@ namespace Amazon.Context.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<int>("UnitInStock")
                         .HasColumnType("int");

@@ -5,6 +5,7 @@ using Amazon.Domain;
 using Amazon.Infrastructure;
 using Amazon.Infrastrucure;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -95,6 +96,13 @@ namespace AmazonAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseExceptionHandler(c => c.Run(async context =>
+            {
+                var exception = context.Features;
+                   
+                var response = new { error =$"This value is already taken" };
+                await context.Response.WriteAsJsonAsync(response);
+            }));
 
             app.MapControllers();
 

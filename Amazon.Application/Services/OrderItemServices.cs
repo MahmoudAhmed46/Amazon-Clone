@@ -28,19 +28,12 @@ namespace Amazon.Application.Services
             return _Mapper.Map<List<OrderItemShow>>(res);
         }
 
-        public async Task<bool> Create(OrderItemShow orderItemDto)
+        public async Task<OrderItemShow> CreateAsync(OrderItemShow orderItemDto)
         {
             OrderItem orderItemModel = _Mapper.Map<OrderItem>(orderItemDto);
             var res = await _repository.CreateAsync(orderItemModel);
-            if (res!=null)
-            {
-                await _repository.SaveChangesAsync();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            await _repository.SaveChangesAsync();
+            return  _Mapper.Map<OrderItemShow>(res);
         }
 
         public async Task<bool> Delete(int id)

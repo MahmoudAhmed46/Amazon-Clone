@@ -89,7 +89,7 @@ namespace Amazon.Context.Migrations
                     arabicName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UnitInStock = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false,defaultValue:true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     arabicDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -417,11 +417,18 @@ namespace Amazon.Context.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Phone_EmailAddress",
+                name: "IX_AspNetUsers_EmailAddress",
                 table: "AspNetUsers",
-                columns: new[] { "Phone", "EmailAddress" },
+                column: "EmailAddress",
                 unique: true,
-                filter: "Phone IS NOT NULL AND EmailAddress IS NOT NULL");
+                filter: "EmailAddress IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Phone",
+                table: "AspNetUsers",
+                column: "Phone",
+                unique: true,
+                filter: "Phone IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
