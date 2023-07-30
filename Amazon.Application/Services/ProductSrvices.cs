@@ -26,7 +26,7 @@ namespace Amazon.Application.Services
         public async Task<List<ShowProductDTO>> FilterByPrice(int catid,decimal initprice, decimal finalprice)
         {
             var res = await _reposatory.GetAllAsync();
-            var FillterdList = res.Where(p => p.Price >= initprice && p.Price <= finalprice && p.CategoryId==catid);
+            var FillterdList = res.Where(p => p.Price >= initprice && p.Price <= finalprice && p.CategoryId==catid&&p.Status==true);
             List<ShowProductDTO> Products = _mapper.Map<List<ShowProductDTO>>(FillterdList);
             foreach(var Product in Products)
             {
@@ -45,7 +45,7 @@ namespace Amazon.Application.Services
         {
             var products = await _reposatory.GetAllAsync();
             var filtterdproducts = products.
-                Where(p => p.CategoryId == categoryId && p.UnitInStock > 0);
+                Where(p => p.CategoryId == categoryId && p.UnitInStock > 0 && p.Status == true);
             var ProductsList= _mapper.Map<List<ShowProductDTO>>(filtterdproducts);
             foreach (var item in ProductsList)
             {
@@ -65,7 +65,7 @@ namespace Amazon.Application.Services
         public async Task<List<ShowProductDTO>> ShowProductsPagination(int pagenumber, int items)
         {
             var products = await _reposatory.GetAllAsync();
-            var paginatedList = products.Where(p => p.UnitInStock > 0)
+            var paginatedList = products.Where(p => p.UnitInStock > 0 && p.Status == true)
                 .Skip(items * (pagenumber - 1)).Take(items);
             return _mapper.Map<List<ShowProductDTO>>(paginatedList);
         }
@@ -89,7 +89,7 @@ namespace Amazon.Application.Services
         {
             var products = await _reposatory.GetAllAsync();
             var filtterdproducts = products.
-                Where(p => p.CategoryId == id).ToList();
+                Where(p => p.CategoryId == id && p.Status == true).ToList();
             decimal minprice = 0;
             decimal maxprice = 100;
             if (filtterdproducts.Count > 0)
@@ -104,7 +104,7 @@ namespace Amazon.Application.Services
         public async Task<List<ShowProductDTO>> GetProductsWithMaxPriceFillter(int catid, decimal max)
         {
             var res = await _reposatory.GetAllAsync();
-            var FillterdList = res.Where(p => p.Price >= max && p.CategoryId == catid);
+            var FillterdList = res.Where(p => p.Price >= max && p.CategoryId == catid && p.Status == true);
             List<ShowProductDTO> Products = _mapper.Map<List<ShowProductDTO>>(FillterdList);
             foreach (var Product in Products)
             {
