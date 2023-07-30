@@ -228,7 +228,7 @@ namespace Amazon.Context.Migrations
                     b.Property<int?>("status")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("total")
+                    b.Property<decimal?>("total")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -281,7 +281,10 @@ namespace Amazon.Context.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", null, t =>
+                        {
+                            t.HasTrigger("calcTotalPrice");
+                        });
                 });
 
             modelBuilder.Entity("Amazon.Domain.Product", b =>

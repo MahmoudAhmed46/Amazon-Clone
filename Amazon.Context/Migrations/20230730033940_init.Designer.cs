@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Amazon.Context.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230729012714_init")]
+    [Migration("20230730033940_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -231,6 +231,9 @@ namespace Amazon.Context.Migrations
                     b.Property<int?>("status")
                         .HasColumnType("int");
 
+                    b.Property<decimal?>("total")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
@@ -281,7 +284,10 @@ namespace Amazon.Context.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", null, t =>
+                        {
+                            t.HasTrigger("calcTotalPrice");
+                        });
                 });
 
             modelBuilder.Entity("Amazon.Domain.Product", b =>

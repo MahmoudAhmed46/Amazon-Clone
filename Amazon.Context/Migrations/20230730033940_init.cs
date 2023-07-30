@@ -327,6 +327,7 @@ namespace Amazon.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    total = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     status = table.Column<int>(type: "int", nullable: true),
                     shippingAddressId = table.Column<int>(type: "int", nullable: true)
