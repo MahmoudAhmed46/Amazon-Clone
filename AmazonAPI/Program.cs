@@ -71,7 +71,6 @@ namespace AmazonAPI
             builder.Services.AddScoped<IOrderItemReposatory, OrderItemReposatory>();
             builder.Services.AddScoped<IOrderItemService,OrderItemServices>();
             builder.Services.AddScoped<IImageReposatory,ImageReposatory>();
-            builder.Services.AddScoped<IUserReposatory,UserRepository>();
             builder.Services.AddScoped<IOrderReposatory, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IRatingRepository, RatingRepository>();
@@ -82,6 +81,8 @@ namespace AmazonAPI
             builder.Services.AddScoped<ICityService, CityService>();
             builder.Services.AddScoped<IShippingAddressRepository, ShippingAddressReposatory>();
             builder.Services.AddScoped<IShippingAddressServices, ShippingAddressServices>();
+            builder.Services.AddScoped<IUserReposatory, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var app = builder.Build();
 

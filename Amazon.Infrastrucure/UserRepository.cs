@@ -30,6 +30,5 @@ namespace Amazon.Infrastrucure
         {
             return await _Dbset.FirstOrDefaultAsync(u => u.EmailAddress == email);
         }
-        
     }
 }

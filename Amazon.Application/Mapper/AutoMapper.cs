@@ -22,9 +22,10 @@ namespace Amazon.Application.Mapper
             CreateMap<Product,AddUpdateProductDTO>().ReverseMap();
             CreateMap<ApplicationUser,UserRegisterDTO>().ReverseMap();
             CreateMap<ApplicationUser,UserLoginDTO>().ReverseMap();
+            CreateMap<ApplicationUser, UserProfileDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemShow>().ReverseMap();
-            CreateMap<Image,ImageDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
+            CreateMap<Image, ImageDTO>().ReverseMap();
             CreateMap<Rating, RatingDTO>().ReverseMap();
             CreateMap<Country, CountryDTO>().ReverseMap();
             CreateMap<City, CitiesListDTO>().ReverseMap();
