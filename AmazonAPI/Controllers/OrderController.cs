@@ -48,9 +48,9 @@ namespace AmazonAPI.Controllers
 
         [HttpPut]
         [Route("UpdateOrder")]
-        public async Task<IActionResult> Update(OrderDTO orderDTO)
+        public async Task<IActionResult> Update(OrderDTO orderDTO,int id)
         {
-            var order = await orderService.Update(orderDTO);
+            var order = await orderService.Update(orderDTO, id);
             if (order != null)
                 return Ok(order);
             else

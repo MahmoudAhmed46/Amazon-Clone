@@ -11,7 +11,7 @@ namespace Amazon.Application.Contracts
         Task<T> CreateAsync(T item);
         Task<T> GetByIdAsync(Tid id);
         Task<IQueryable<T>> GetAllAsync();
-        Task<bool> UpdateAsync(T item);
+        Task<bool> UpdateAsync(T item,Tid id);
         Task<bool> DeleteAsync(Tid id);
         Task<int> SaveChangesAsync();
     }

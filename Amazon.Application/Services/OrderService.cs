@@ -5,6 +5,7 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace Amazon.Application.Services
         private readonly IOrderReposatory orderReposatory;
         private readonly IOrderItemReposatory orderItem;
         private readonly IMapper mapper;
+       
 
         public OrderService(IOrderReposatory orderReposatory,IOrderItemReposatory orderItem
             ,IMapper mapper)
@@ -22,6 +24,7 @@ namespace Amazon.Application.Services
             this.orderReposatory = orderReposatory;
             this.orderItem = orderItem;
             this.mapper = mapper;
+            
         }
 
         public async Task<OrderDTO> Create(OrderDTO orderDTO)
@@ -34,15 +37,19 @@ namespace Amazon.Application.Services
 
         public async Task<bool> Delete(int id)
         {
-            await orderItem.deleteOrderItemsByOrderId(id);
-            var res= await orderReposatory.DeleteAsync(id);
-            await orderReposatory.SaveChangesAsync();
-            return res;
+            var order = await orderReposatory.GetByIdAsync(id);
+            order.IsDeleted = true;
+            order.status=0;
+            await orderReposatory.UpdateAsync(order, id);
+           await orderReposatory.SaveChangesAsync();
+            return true;
+
+           
         }
 
         public async Task<List<OrderDTO>> getAllByUserId(string id)
         {
-            var orders= await orderReposatory.getAllOrdersByUserId(id);
+            var orders= (await orderReposatory.getAllOrdersByUserId(id)).Where(o => o.IsDeleted == false);
             return mapper.Map<List<OrderDTO>>(orders);
         }
 
@@ -52,10 +59,10 @@ namespace Amazon.Application.Services
             return mapper.Map<OrderDTO>(order);
         }
 
-        public async Task<OrderDTO> Update(OrderDTO orderDTO)
+        public async Task<OrderDTO> Update(OrderDTO orderDTO, int id)
         {
             var order = mapper.Map<Order>(orderDTO);
-            var res= await orderReposatory.UpdateAsync(order);
+            var res = await orderReposatory.UpdateAsync(order, id);
             return mapper.Map<OrderDTO>(res);
         }
     }

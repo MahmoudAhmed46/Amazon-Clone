@@ -21,7 +21,7 @@ namespace Amazon.Domain
         public DateTime OrderDate { get; set; }
         public DateTime ArrivalDate { get; set; }
         public decimal? total{ get; set; }
-
+        public bool IsDeleted { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
         public Status? status { get; set; }

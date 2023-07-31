@@ -34,7 +34,7 @@ namespace Amazon.Application.Services
         {
             Image image = _Mapper.Map<Image>(img);
             image.Id = id;
-            var res=await _imagerepo.UpdateAsync(image);
+            var res=await _imagerepo.UpdateAsync(image,id);
             if (res)
             {
                 await _imagerepo.SaveChangesAsync();

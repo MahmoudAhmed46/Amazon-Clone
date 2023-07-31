@@ -14,7 +14,7 @@ namespace Amazon.Application.Services
         Task<List<OrderDTO>> getAllByUserId(string id);
         Task<OrderDTO> GetByIdAsync(int id);
         Task<OrderDTO> Create(OrderDTO orderDTO);
-        Task<OrderDTO> Update(OrderDTO orderDTO);
+        Task<OrderDTO> Update(OrderDTO orderDTO,int id);
         Task<bool> Delete(int id);
     }
 }

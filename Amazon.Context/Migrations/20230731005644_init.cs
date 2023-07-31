@@ -89,7 +89,7 @@ namespace Amazon.Context.Migrations
                     arabicName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UnitInStock = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false,defaultValue:true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     arabicDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -328,6 +328,7 @@ namespace Amazon.Context.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     total = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     status = table.Column<int>(type: "int", nullable: true),
                     shippingAddressId = table.Column<int>(type: "int", nullable: true)

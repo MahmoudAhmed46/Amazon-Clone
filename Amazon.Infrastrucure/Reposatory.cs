@@ -33,11 +33,17 @@ namespace Amazon.Infrastructure
         {
             return (await _Dbset.FindAsync(id));
         }
-		public async Task<bool> UpdateAsync(T Entity)
+		public async Task<bool> UpdateAsync(T Entity, Tid id)
 		{
-			var res = _Dbset.Update(Entity);
-			return res != null ? true : false;
-		}
+            var existingEntity = await _Dbset.FindAsync(id);
+            if (existingEntity != null)
+            {
+                _Dbset.Entry(existingEntity).CurrentValues.SetValues(Entity);
+                return true;
+            }
+            return false;
+           
+        }
         public async Task<bool> DeleteAsync(Tid id)
         {
             var item = await _Dbset.FindAsync(id);

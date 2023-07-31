@@ -133,7 +133,7 @@ namespace Amazon.Application.Services
 		{
             Product product1 = _mapper.Map<Product>(product);
             product1.Id = id;
-            var res = await _reposatory.UpdateAsync(product1);
+            var res = await _reposatory.UpdateAsync(product1, id);
             if (res)
             {
                 await _reposatory.SaveChangesAsync();
@@ -147,7 +147,7 @@ namespace Amazon.Application.Services
             var res = await _reposatory.DeleteAsync(id);
             if (res)
             {
-                _reposatory.SaveChangesAsync();
+                await _reposatory.SaveChangesAsync();
                 return true;
             }
             else
@@ -159,7 +159,7 @@ namespace Amazon.Application.Services
         {
             var product=await _reposatory.GetByIdAsync(id);
             product.UnitInStock += count;
-            var res=await _reposatory.UpdateAsync(product);
+            var res=await _reposatory.UpdateAsync(product, id);
             await _reposatory.SaveChangesAsync();
             return res;
         }
@@ -167,7 +167,7 @@ namespace Amazon.Application.Services
         {
             var product = await _reposatory.GetByIdAsync(id);
             product.UnitInStock -= count;
-            var res = await _reposatory.UpdateAsync(product);
+            var res = await _reposatory.UpdateAsync(product, id);
             await _reposatory.SaveChangesAsync();
             return res;
         }

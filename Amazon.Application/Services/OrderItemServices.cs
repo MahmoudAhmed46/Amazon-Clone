@@ -55,7 +55,7 @@ namespace Amazon.Application.Services
         public async Task<bool> Update(int id, OrderItemShow orderItemDto)
         {
             OrderItem orderItem = _Mapper.Map<OrderItem>(orderItemDto);
-            var res=await _repository.UpdateAsync(orderItem);
+            var res=await _repository.UpdateAsync(orderItem, id);
             if (res)
             {
                 await _repository.SaveChangesAsync();

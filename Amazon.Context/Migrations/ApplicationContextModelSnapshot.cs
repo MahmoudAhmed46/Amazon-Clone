@@ -215,6 +215,9 @@ namespace Amazon.Context.Migrations
                     b.Property<DateTime>("ArrivalDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -281,10 +284,7 @@ namespace Amazon.Context.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", null, t =>
-                        {
-                            t.HasTrigger("calcTotalPrice");
-                        });
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Amazon.Domain.Product", b =>
