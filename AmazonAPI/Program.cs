@@ -26,7 +26,7 @@ namespace AmazonAPI
             {
                 option.AddDefaultPolicy(builder =>
                 {
-                    builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                    builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().SetIsOriginAllowed(origin => origin == "https://member5-8.smarterasp.net/cp/filemanager.asp?d=h:"); ;
                 });
             });
 
